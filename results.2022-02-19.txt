@@ -1,0 +1,8 @@
+On an S3 bucket, reading from a tar is faster than from a dir
+
+ • reading 200 separate 8MB files (1.6G total) takes:
+    - 45 seconds each file from a directory,
+    - 13 seconds from tar
+ • reading 2000 separate 4KB files (8M total) takes:
+    - 1 minute 49 seconds each file from a directory,
+    - 4 seconds from tar

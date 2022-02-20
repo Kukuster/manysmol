@@ -1,0 +1,42 @@
+# extract "randfile001" file contents from "test1.tar" tar, and output to stdout
+tar -xOf test1.tar randfile001
+
+
+
+1. Creating random files:
+
+# creates a file with name randfile001 with 8M of random bytes
+# (IMO using dd is preferred, but idk s3, so using more high level stuff)
+head -c 8000000 </dev/urandom > randfile001
+
+
+# creates 200 files named "randfile001" through "randfile200" with 8M of random bytes  
+for i in `seq -w 1 200` ; do
+    head -c 8000000 </dev/urandom >"randfile$i" && ls -lA "randfile$i"
+done
+
+# creates 2000 files named "randfile0001" through "randfile2000" with 4K of random bytes
+for i in `seq -w 1 2000` ; do
+    head -c 4000 </dev/urandom >"randfile$i" && ls -lA "randfile$i" 
+done
+
+
+
+2. creating a tar from those random files:
+
+# creates a tar named "archive.tar" with files "file1" "file2" "file3"
+tar cvf archive.tar file1 file2 file3
+
+# creates a tar of test1 directory contents
+# because files for this tar are referenced directly withing the dir (without the directory name and slash),
+# the files inside tar will not be having directory name as part of their name,
+# so the resulting structure resembles one of the "test1" directory
+cd test1
+tar cvf ../test1.tar *
+cd -
+
+# list files inside a tar archive:
+tar -tf test1.tar | less
+
+
+
